@@ -95,7 +95,10 @@ export default function JourneyUI() {
   const completedSteps = journeySteps.filter((s) => s.status === "completed").length;
   const totalSteps = journeySteps.length;
   const completionPercentage = (completedSteps / totalSteps) * 100;
+  
+  // Used for tracking current step in flow
   const currentStepIndex = journeySteps.findIndex(step => step.status === "current");
+  console.log(`Current step: ${activeStepId}, Step index: ${currentStepIndex}`);
 
   // 7. Smart Recommendations - Contextual tips based on journey state
   const getSmartRecommendation = () => {
@@ -152,14 +155,44 @@ export default function JourneyUI() {
 
   return (
     <div className="p-6 space-y-8 relative">
+      {/* Header with Enhancement Labels */}
+      <div className="bg-gradient-to-r from-blue-50 to-purple-50 p-4 rounded-lg border border-blue-200 mb-6">
+        <h1 className="text-xl font-bold text-gray-800 mb-2">🎨 UI/UX Journey Flow Improvements</h1>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-xs">
+          <div className="bg-white p-2 rounded border">
+            <span className="font-semibold text-blue-600">1. Interactive Stepper</span>
+            <div className="text-gray-600">Enhanced journey steps</div>
+          </div>
+          <div className="bg-white p-2 rounded border">
+            <span className="font-semibold text-green-600">2. Visual Journey Map</span>
+            <div className="text-gray-600">Horizontal flow diagram</div>
+          </div>
+          <div className="bg-white p-2 rounded border">
+            <span className="font-semibold text-purple-600">3. Step Cards</span>
+            <div className="text-gray-600">Interactive card actions</div>
+          </div>
+          <div className="bg-white p-2 rounded border">
+            <span className="font-semibold text-orange-600">4. Progress Animation</span>
+            <div className="text-gray-600">Enhanced progress bar</div>
+          </div>
+        </div>
+      </div>
+
       {/* 8. Celebration Animation */}
       {showCelebration && (
         <div className="fixed inset-0 pointer-events-none z-50 flex items-center justify-center">
           <div className="text-6xl animate-bounce">🎉</div>
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 mt-16 bg-white px-4 py-2 rounded-lg shadow-lg border">
+            <span className="text-sm font-semibold text-purple-600">8. Micro-Interactions & Celebrations</span>
+          </div>
         </div>
       )}
 
       {/* 4. Progress Animation - Enhanced progress bar */}
+      <div className="relative">
+        <div className="absolute -top-6 left-0 bg-orange-100 text-orange-700 px-2 py-1 rounded text-xs font-semibold">
+          4. Progress Animation
+        </div>
       <div>
         <div className="flex justify-between text-sm mb-2">
           <span className="text-gray-500 font-medium">Setup Progress</span>
@@ -184,9 +217,14 @@ export default function JourneyUI() {
           <span>Ready to Launch</span>
         </div>
       </div>
+      </div>
 
       {/* 6. Journey Flow Visualization - Enhanced flow diagram */}
-      <div className="flex items-center justify-center gap-4 py-4">
+      <div className="relative">
+        <div className="absolute -top-6 left-0 bg-green-100 text-green-700 px-2 py-1 rounded text-xs font-semibold">
+          2. Visual Journey Map
+        </div>
+        <div className="flex items-center justify-center gap-4 py-4">
         {journeySteps.map((step, i) => (
           <React.Fragment key={step.id}>
             <div className="text-center group">
@@ -214,10 +252,15 @@ export default function JourneyUI() {
             )}
           </React.Fragment>
         ))}
+        </div>
       </div>
 
       {/* 3. Step Cards with Actions - Enhanced interactive cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
+      <div className="relative">
+        <div className="absolute -top-6 left-0 bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-semibold">
+          3. Step Cards with Actions
+        </div>
+        <div className="grid grid-cols-1 md:grid-cols-3 lg:grid-cols-6 gap-4">
         {journeySteps.map((step, index) => (
           <Card
             key={step.id}
@@ -284,10 +327,15 @@ export default function JourneyUI() {
             </CardContent>
           </Card>
         ))}
+        </div>
       </div>
 
       {/* 7. Smart Recommendations - Dynamic contextual recommendations */}
-      <div className={`p-4 border rounded-lg ${recommendation.bgColor} ${recommendation.borderColor} flex gap-3 items-start transition-all duration-300 hover:shadow-md`}>
+      <div className="relative">
+        <div className="absolute -top-6 left-0 bg-yellow-100 text-yellow-700 px-2 py-1 rounded text-xs font-semibold">
+          7. Smart Recommendations
+        </div>
+        <div className={`p-4 border rounded-lg ${recommendation.bgColor} ${recommendation.borderColor} flex gap-3 items-start transition-all duration-300 hover:shadow-md`}>
         <div className={`${recommendation.iconBg} w-8 h-8 rounded-full flex items-center justify-center`}>
           <recommendation.icon className="w-4 h-4 text-white" />
         </div>
@@ -307,10 +355,15 @@ export default function JourneyUI() {
             {recommendation.action} →
           </Button>
         </div>
+        </div>
       </div>
 
       {/* Journey Statistics */}
-      <div className="grid grid-cols-3 gap-4 mt-6">
+      <div className="relative">
+        <div className="absolute -top-6 left-0 bg-indigo-100 text-indigo-700 px-2 py-1 rounded text-xs font-semibold">
+          Additional: Journey Statistics
+        </div>
+        <div className="grid grid-cols-3 gap-4 mt-6">
         <div className="text-center p-3 bg-gray-50 rounded-lg">
           <Users className="w-6 h-6 text-gray-500 mx-auto mb-1" />
           <div className="text-sm font-semibold text-gray-700">Setup</div>
@@ -325,6 +378,20 @@ export default function JourneyUI() {
           <BarChart className="w-6 h-6 text-gray-500 mx-auto mb-1" />
           <div className="text-sm font-semibold text-gray-700">Analytics</div>
           <div className="text-xs text-gray-500">{journeySteps.filter(s => s.category === 'analytics').length} step</div>
+        </div>
+        </div>
+      </div>
+
+      {/* Enhancement Legend */}
+      <div className="bg-gray-50 p-4 rounded-lg border">
+        <h3 className="text-sm font-semibold text-gray-700 mb-2">Enhancement Legend:</h3>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-2 text-xs">
+          <div>• <span className="text-blue-600 font-semibold">1. Interactive Stepper:</span> Enhanced actions & categories</div>
+          <div>• <span className="text-green-600 font-semibold">2. Visual Journey Map:</span> Flow diagram with categories</div>
+          <div>• <span className="text-purple-600 font-semibold">3. Step Cards:</span> Interactive cards with priority dots</div>
+          <div>• <span className="text-orange-600 font-semibold">4. Progress Animation:</span> Smooth gradient progress</div>
+          <div>• <span className="text-yellow-600 font-semibold">7. Smart Recommendations:</span> Context-aware tips</div>
+          <div>• <span className="text-purple-600 font-semibold">8. Micro-Interactions:</span> Click completed steps for 🎉</div>
         </div>
       </div>
     </div>
